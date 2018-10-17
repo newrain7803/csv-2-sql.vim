@@ -29,8 +29,11 @@ function! csv2sql#getValues(arr_text)
         call add(arr_values,split(text,','))
     endfor
     let str_value = ''
-    for values in arr_values
-        let str_value = str_value.'("'. join(values,'","') .'"),'
+    let index = 1
+    for line_values in arr_values
+        let str_last = (index == len(arr_values))?'");':'"),'
+        let str_value = str_value.'("'. join(line_values,'","') .str_last
+        let index = index + 1
     endfor
     return str_value
 endfunction
