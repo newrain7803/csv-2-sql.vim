@@ -5,8 +5,11 @@ set cpo&vim
 
 function! csv2sql#export()
     execute 'rightbelow vne'
-    let text = csv2sql#read()
-    let @@ = json_encode(text)
+    let raw_text = csv2sql#read()
+    let arr_text = split(raw_text,'\n')
+    let column_name = remove(arr_text,0)
+    let str_text = '('.join(arr_text,'),(').');'
+    let @@ = str_text
     execute 'normal! p'
 endfunction
 
